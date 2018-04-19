@@ -20,6 +20,23 @@ Currently, Synthea<sup>TM</sup> features:
 
 ## Quick Start
 
+
+### Containerized
+**System Requirements:**
+Synthea<sup>TM</sup> requires Docker and optionally Make.
+
+To clone the Synthea<sup>TM</sup> repo, then build and run the test suite in a container:
+```
+git clone https://github.com/synthetichealth/synthea.git
+make build
+```
+
+### Generate Synthetic Patients
+```
+make run
+```
+
+
 ### Installation
 
 **System Requirements:**
@@ -32,6 +49,21 @@ cd synthea
 ./gradlew build check test
 ```
 
+Command-line arguments may be provided to specify a state, city, population size, or seed for randomization.
+
+Usage is
+```
+run.sh [-s seed] [-p populationSize] [state [city]]
+```
+For example:
+
+ - `run.sh Massachusetts`
+ - `run.sh Alaska Juneau`
+ - `run.sh -s 12345`
+ - `run.sh -p 1000`
+ - `run.sh -s 987 Washington Seattle`
+ - `run.sh -s 21 -p 100 Utah "Salt Lake City"`
+
 ### Generate Synthetic Patients
 Generating the population one at a time...
 ```
@@ -40,7 +72,7 @@ Generating the population one at a time...
 
 Command-line arguments may be provided to specify a state, city, population size, or seed for randomization.
 
-Usage is 
+Usage is
 ```
 run_synthea [-s seed] [-p populationSize] [state [city]]
 ```
