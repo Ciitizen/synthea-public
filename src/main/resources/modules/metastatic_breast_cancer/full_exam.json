@@ -5,8 +5,7 @@
     "This submodule must occur DURING AN ENCOUNTER. Includes: ",
     "1. Physical exam ",
     "2. Imaging ",
-    "3. Labs ",
-    "4. MD Notes "
+    "3. Labs + other procedures"
   ],
   "states": {
 
@@ -112,21 +111,82 @@
           ]
         }
       ],
-      "direct_transition": "Labs"
+      "direct_transition": "Blood_Cell_Count"
     },
 
-    "Labs": {
-      "type": "Simple",
-      "remarks": [
-        "TODO: Identify which labs are run, and the observations made."
+    "Blood_Cell_Count": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "88308000",
+          "display": "Blood cell count"
+        }
       ],
-      "direct_transition": "MD_Note"
+      "direct_transition": "Measure_Red_Blood_Cell_Count"
     },
 
-    "MD_Note": {
+    "Measure_Red_Blood_Cell_Count": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "unit": "cells/uL",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "26453-1",
+          "display": "Erythrocytes [#/volume] in Blood"
+        }
+      ],
+      "attribute": "red_blood_cell_count",
+      "direct_transition": "Measure_White_Blood_Cell_Count"
+    },
+
+    "Measure_White_Blood_Cell_Count": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "unit": "cells/uL",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "26464-8",
+          "display": "Leukocytes [#/volume] in Blood"
+        }
+      ],
+      "attribute": "white_blood_cell_count",
+      "direct_transition": "Measure_Platelet_Count"
+    },
+
+    "Measure_Platelet_Count": {
+      "type": "Observation",
+      "category": "vital-signs",
+      "unit": "cells/uL",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "26515-7",
+          "display": "Platelets [#/volume] in Blood"
+        }
+      ],
+      "attribute": "platelet_blood_cell_count",
+      "direct_transition": "Metabolic_Panel"
+    },
+
+    "Metabolic_Panel": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "165102003",
+          "display": "Metabolic function test"
+        }
+      ],
+      "direct_transition": "Metabolic_Panel_Observations"
+    },
+
+    "Metabolic_Panel_Observations": {
       "type": "Simple",
       "remarks": [
-        "TODO: Capture the physician's clinical notes on the patient."
+        "TODO: Record observations about the patient's metabolic panel"
       ],
       "direct_transition": "Terminal"
     },

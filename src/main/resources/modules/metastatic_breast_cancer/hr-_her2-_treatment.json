@@ -47,7 +47,7 @@
           "display": "PACLitaxel 100 MG Injection"
         }
       ],
-      "direct_transition": "Baseline_Exam"
+      "direct_transition": "Baseline_Exam_And_Findings"
     },
 
     "Prescribe_Capecitabine": {
@@ -59,10 +59,10 @@
           "display": "Capecitabine 150 MG Oral Tablet"
         }
       ],
-      "direct_transition": "Baseline_Exam"
+      "direct_transition": "Baseline_Exam_And_Findings"
     },
 
-    "Baseline_Exam": {
+    "Baseline_Exam_And_Findings": {
       "type": "CallSubmodule",
       "submodule": "procedures/metastatic_breast_cancer/full_exam",
       "direct_transition": "End_Therapy_Initial_Encounter"
@@ -85,10 +85,10 @@
     "Chemotherapy_Check_Up": {
       "type": "Encounter",
       "encounter_class": "ambulatory",
-      "direct_transition": "Routine_Exam"
+      "direct_transition": "Routine_Exam_And_Findings"
     },
 
-    "Routine_Exam": {
+    "Routine_Exam_And_Findings": {
       "type": "CallSubmodule",
       "submodule": "procedures/metastatic_breast_cancer/full_exam",
       "direct_transition": "End_Chemotherapy_Check_Up"
