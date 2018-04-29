@@ -1,0 +1,163 @@
+{
+  "name": "Blood Cell Counts",
+  "remarks": [
+    "This module regulates a patient's red/white/platelet cell counts.",
+    "All patients start out with 'normal' counts and may have their counts ",
+    "affected by various diseases, e.g. cancer."
+  ],
+  "states": {
+
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Normal_Red_Cell_Count"
+    },
+
+    "Normal_Red_Cell_Count": {
+      "type": "SetAttribute",
+      "remarks": [
+        "Normal RBC: 4.2M - 5.4M cells/uL"
+      ],
+      "attribute": "red_blood_cell_count",
+      "value": 5000000,
+      "direct_transition": "Normal_White_Cell_Count"
+    },
+
+    "Normal_White_Cell_Count": {
+      "type": "SetAttribute",
+      "remarks": [
+        "Normal WBC: 4,500 - 10,000 cells/uL"
+      ],
+      "attribute": "white_blood_cell_count",
+      "value": 8000,
+      "direct_transition": "Normal_Platelet_Count"
+    },
+
+    "Normal_Platelet_Count": {
+      "type": "SetAttribute",
+      "remarks": [
+        "Normal platelet count: 150k - 450k platelets/uL"
+      ],
+      "attribute": "platelet_blood_cell_count",
+      "value": 250000,
+      "direct_transition": "Living_With_Normal_Counts"
+    },
+
+    "Living_With_Normal_Counts": {
+      "type": "Simple",
+      "remarks": [
+        "Patients remain in this state until one or more conditions cause their ",
+        "blood cell counts to change, typically in some unhealthy way."
+      ],
+      "conditional_transition": [
+        {
+          "condition": {
+            "condition_type": "Active Medication",
+            "remarks": [
+              "Chemotherapy drugs lower blood cell counts"
+            ],
+            "codes": [
+              {
+                "system": "RxNorm",
+                "code": "1298948",
+                "display": "14 ML pertuzumab 30 MG/ML Injection"
+              }
+            ]
+          },
+          "transition": "Reduced_Cell_Counts"
+        },
+        {
+          "condition": {
+            "condition_type": "Active Medication",
+            "remarks": [
+              "Chemotherapy drugs lower blood cell counts"
+            ],
+            "codes": [
+              {
+                "system": "RxNorm",
+                "code": "1922509",
+                "display": "Trastuzumab 150 MG Injection"
+              }
+            ]
+          },
+          "transition": "Reduced_Cell_Counts"
+        },
+        {
+          "condition": {
+            "condition_type": "Active Medication",
+            "remarks": [
+              "Chemotherapy drugs lower blood cell counts"
+            ],
+            "codes": [
+              {
+                "system": "RxNorm",
+                "code": "583214",
+                "display": "PACLitaxel 100 MG Injection"
+              }
+            ]
+          },
+          "transition": "Reduced_Cell_Counts"
+        },
+        {
+          "condition": {
+            "condition_type": "Active Medication",
+            "remarks": [
+              "Chemotherapy drugs lower blood cell counts"
+            ],
+            "codes": [
+              {
+                "system": "RxNorm",
+                "code": "200327",
+                "display": "Capecitabine 150 MG Oral Tablet"
+              }
+            ]
+          },
+          "transition": "Reduced_Cell_Counts"
+        }
+      ]
+    },
+
+    "Reduced_Cell_Counts": {
+      "type": "Simple",
+      "direct_transition": "Reduced_Red_Cell_Count"
+    },
+
+    "Reduced_Red_Cell_Count": {
+      "type": "SetAttribute",
+      "remarks": [
+        "Normal RBC: 4.2M - 5.4M cells/uL"
+      ],
+      "attribute": "red_blood_cell_count",
+      "value": 3000000,
+      "direct_transition": "Reduced_White_Cell_Count"
+    },
+
+    "Reduced_White_Cell_Count": {
+      "type": "SetAttribute",
+      "remarks": [
+        "Normal WBC: 4,500 - 10,000 cells/uL"
+      ],
+      "attribute": "white_blood_cell_count",
+      "value": 2500,
+      "direct_transition": "Reduced_Platelet_Count"
+    },
+
+    "Reduced_Platelet_Count": {
+      "type": "SetAttribute",
+      "remarks": [
+        "Normal platelet count: 150k - 450k platelets/uL"
+      ],
+      "attribute": "platelet_count",
+      "value": 100000,
+      "direct_transition": "Living_With_Reduced_Counts"
+    },
+
+    "Living_With_Reduced_Counts": {
+      "type": "Simple",
+      "direct_transition": "Terminal"
+    },
+
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}
