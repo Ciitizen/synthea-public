@@ -152,6 +152,32 @@ public class StateTest {
   }
 
   @Test
+  public void condition_onset_diagnosed_by_target_encounter() { 
+    Module module = getModule("condition_onset.json");
+    
+    State condition = module.getState("Diabetes");
+    // Should pass through this state immediately without calling the record
+    assertTrue(condition.process(person, time));
+    person.history.add(0, condition);
+    
+    // The encounter comes next (and add it to history);
+    State encounter = module.getState("ED_Visit");
+
+    assertTrue(encounter.process(person, time));
+    person.history.add(0, encounter);
+
+    assertEquals(1, person.record.encounters.size());
+    Encounter enc = person.record.encounters.get(0);
+    Code code = enc.codes.get(0);
+    assertEquals("50849002", code.code);
+    assertEquals("Emergency Room Admission", code.display);
+    assertEquals(1, enc.conditions.size());
+    code = enc.conditions.get(0).codes.get(0);
+    assertEquals("73211009", code.code);
+    assertEquals("Diabetes mellitus", code.display);
+  }
+
+  @Test
   public void condition_onset_during_encounter() {
     Module module = getModule("condition_onset.json");
     // The encounter comes first (and add it to history);
@@ -552,7 +578,7 @@ public class StateTest {
     // Verify that the Encounter was added to the record
     HealthRecord.Encounter enc = person.record.encounters.get(0);
     assertEquals(time, enc.start);
-    assertEquals(0L, enc.stop);
+    assertEquals(time + TimeUnit.MINUTES.toMillis(60), enc.stop);
 
     Code code = enc.codes.get(0);
     assertEquals("50849002", code.code);
@@ -575,7 +601,7 @@ public class StateTest {
     // Verify that the Encounter was added to the record
     HealthRecord.Encounter enc = person.record.encounters.get(0);
     assertEquals(time, enc.start);
-    assertEquals(0L, enc.stop);
+    assertEquals(time + TimeUnit.MINUTES.toMillis(60), enc.stop);
     assertEquals("73211009", enc.reason.code);
     assertEquals("Diabetes Mellitus", enc.reason.display);
 

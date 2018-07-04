@@ -15,12 +15,10 @@
     "'opioid crisis' of today is seen as beginning in the 90's and 00's."
   ],
   "states": {
-
     "Initial": {
       "type": "Initial",
       "direct_transition": "Guard"
     },
-
     "Guard": {
       "type": "Guard",
       "remarks": [
@@ -45,7 +43,6 @@
       },
       "direct_transition": "General_Population"
     },
-
     "General_Population": {
       "type": "Delay",
       "exact": {
@@ -138,7 +135,6 @@
         }
       ]
     },
-
     "Enter_Directed_Use": {
       "type": "Simple",
       "remarks": [
@@ -159,7 +155,6 @@
         }
       ]
     },
-
     "Enter_Directed_Use_Condition1": {
       "type": "ConditionOnset",
       "target_encounter": "Enter_Directed_Use_Encounter1",
@@ -172,7 +167,6 @@
       ],
       "direct_transition": "Enter_Directed_Use_Encounter1"
     },
-
     "Enter_Directed_Use_Encounter1": {
       "type": "Encounter",
       "encounter_class": "inpatient",
@@ -186,7 +180,6 @@
       ],
       "direct_transition": "Enter_Directed_Use_Procedure1"
     },
-
     "Enter_Directed_Use_Procedure1": {
       "type": "Procedure",
       "target_encounter": "Enter_Directed_Use_Encounter1",
@@ -199,7 +192,6 @@
       ],
       "direct_transition": "Directed_Use_Prescription1"
     },
-
     "Directed_Use_Prescription1": {
       "type": "MedicationOrder",
       "target_encounter": "Enter_Directed_Use_Encounter1",
@@ -213,7 +205,6 @@
       ],
       "direct_transition": "End_Directed_Use_Encounter"
     },
-
     "Enter_Directed_Use_Condition2": {
       "type": "ConditionOnset",
       "target_encounter": "Enter_Directed_Use_Encounter2",
@@ -226,7 +217,6 @@
       ],
       "direct_transition": "Enter_Directed_Use_Encounter2"
     },
-
     "Enter_Directed_Use_Encounter2": {
       "type": "Encounter",
       "encounter_class": "inpatient",
@@ -240,7 +230,6 @@
       ],
       "direct_transition": "Directed_Use_Prescription2"
     },
-
     "Directed_Use_Prescription2": {
       "type": "MedicationOrder",
       "target_encounter": "Enter_Directed_Use_Encounter2",
@@ -254,7 +243,6 @@
       ],
       "direct_transition": "End_Directed_Use_Encounter"
     },
-
     "Enter_Directed_Use_Condition3": {
       "type": "ConditionOnset",
       "target_encounter": "Enter_Directed_Use_Encounter3",
@@ -267,13 +255,19 @@
       ],
       "direct_transition": "Enter_Directed_Use_Encounter3"
     },
-
     "Enter_Directed_Use_Encounter3": {
       "type": "Encounter",
-      "wellness": true,
+      "encounter_class": "inpatient",
+      "reason": "Enter_Directed_Use_Condition3",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": 183452005,
+          "display": "Encounter Inpatient"
+        }
+      ],
       "direct_transition": "Directed_Use_Prescription3"
     },
-
     "Directed_Use_Prescription3": {
       "type": "MedicationOrder",
       "target_encounter": "Enter_Directed_Use_Encounter3",
@@ -287,12 +281,10 @@
       ],
       "direct_transition": "End_Directed_Use_Encounter"
     },
-
-    "End_Directed_Use_Encounter" : {
-      "type" : "EncounterEnd",
-      "direct_transition" : "Directed_Use"
+    "End_Directed_Use_Encounter": {
+      "type": "EncounterEnd",
+      "direct_transition": "Directed_Use"
     },
-
     "Directed_Use": {
       "type": "Delay",
       "remarks": [
@@ -334,13 +326,11 @@
         }
       ]
     },
-
     "End_Prescription_Towards_Gen_Pop": {
       "type": "MedicationEnd",
       "referenced_by_attribute": "opioid_prescription",
       "direct_transition": "Reset_Opioid_var_Towards_Gen_Pop"
     },
-
     "Reset_Opioid_var_Towards_Gen_Pop": {
       "type": "SetAttribute",
       "attribute": "opioid_prescription",
@@ -349,7 +339,6 @@
       ],
       "direct_transition": "General_Population"
     },
-
     "End_Prescription_Towards_Misuse": {
       "type": "MedicationEnd",
       "referenced_by_attribute": "opioid_prescription",
@@ -358,7 +347,6 @@
       ],
       "direct_transition": "Misuse"
     },
-
     "Misuse": {
       "type": "Delay",
       "exact": {
@@ -401,6 +389,97 @@
       ]
     },
 
+     "Opioid_Addiction_Symptom1": {
+      "type": "Symptom",
+      "symptom": "Anxiety",
+      "range": {
+        "low": 0,
+        "high": 15
+      },
+      "direct_transition": "Opioid_Addiction_Symptom2"
+    },
+    "Opioid_Addiction_Symptom2": {
+      "type": "Symptom",
+      "symptom": "Confusion",
+      "range": {
+        "low": 0,
+        "high": 10
+      },
+      "direct_transition": "Opioid_Addiction_Symptom3"
+    },
+    "Opioid_Addiction_Symptom3": {
+      "type": "Symptom",
+      "symptom": "Cognitive Difficulties",
+      "range": {
+        "low": 0,
+        "high": 20
+      },
+      "direct_transition": "Opioid_Addiction_Symptom4"
+    },
+    "Opioid_Addiction_Symptom4": {
+      "type": "Symptom",
+      "symptom": "Nausea/Vomiting",
+      "range": {
+        "low": 0,
+        "high": 10
+      },
+      "direct_transition": "Opioid_Addiction_Symptom5"
+    },
+    "Opioid_Addiction_Symptom5": {
+      "type": "Symptom",
+      "symptom": "Shortness Constipation Breath",
+      "range": {
+        "low": 0,
+        "high": 10
+      },
+      "direct_transition": "Opioid_Addiction_Symptom6"
+    },
+    "Opioid_Addiction_Symptom6": {
+      "type": "Symptom",
+      "symptom": "Pain Sensitivity",
+      "range": {
+        "low": 0,
+        "high": 10
+      },
+      "direct_transition": "Opioid_Addiction_Symptom7"
+    },
+    "Opioid_Addiction_Symptom7": {
+      "type": "Symptom",
+      "symptom": "Reduced Sex Drive",
+      "range": {
+        "low": 0,
+        "high": 10
+      },
+      "direct_transition": "Opioid_Addiction_Symptom8"
+    },
+    "Opioid_Addiction_Symptom8": {
+      "type": "Symptom",
+      "symptom": "Slurred Speech",
+      "range": {
+        "low": 0,
+        "high": 15
+      },
+      "direct_transition": "Opioid_Addiction_Symptom9"
+    },
+    "Opioid_Addiction_Symptom9": {
+      "type": "Symptom",
+      "symptom": "Shallow Breathing",
+      "range": {
+        "low": 0,
+        "high": 15
+      },
+      "direct_transition": "Opioid_Addiction_Symptom10"
+    },
+    "Opioid_Addiction_Symptom10": {
+      "type": "Symptom",
+      "symptom": "Mood Swing",
+      "range": {
+        "low": 0,
+        "high": 10
+      },
+      "direct_transition": "Active_Addiction"
+    },
+    
     "Active_Addiction": {
       "type": "Delay",
       "exact": {
@@ -428,7 +507,6 @@
         }
       ]
     },
-
     "Detoxification": {
       "type": "Delay",
       "exact": {
@@ -457,7 +535,6 @@
         }
       ]
     },
-
     "Enter_Addiction_Treatment": {
       "type": "Encounter",
       "encounter_class": "inpatient",
@@ -470,12 +547,10 @@
       ],
       "direct_transition": "End_Addiction_Treatment_Encounter"
     },
-
-    "End_Addiction_Treatment_Encounter" : {
-      "type" : "EncounterEnd",
+    "End_Addiction_Treatment_Encounter": {
+      "type": "EncounterEnd",
       "direct_transition": "Addiction_Treatment"
     },
-
     "Addiction_Treatment": {
       "type": "Delay",
       "exact": {
@@ -497,7 +572,6 @@
         }
       ]
     },
-
     "Recovery_Management": {
       "type": "Encounter",
       "encounter_class": "outpatient",
@@ -510,12 +584,10 @@
       ],
       "direct_transition": "End_Recovery_Management_Encounter"
     },
-
-    "End_Recovery_Management_Encounter" : {
-      "type" : "EncounterEnd",
+    "End_Recovery_Management_Encounter": {
+      "type": "EncounterEnd",
       "direct_transition": "Recovery_Management_Delay"
     },
-
     "Recovery_Management_Delay": {
       "type": "Delay",
       "exact": {
@@ -536,7 +608,6 @@
         }
       ]
     },
-
     "Directed_Use_Overdose": {
       "type": "ConditionOnset",
       "target_encounter": "Directed_Use_Overdose_Encounter",
@@ -549,10 +620,9 @@
       ],
       "direct_transition": "Directed_Use_Overdose_Encounter"
     },
-
     "Directed_Use_Overdose_Encounter": {
       "type": "Encounter",
-      "encounter_class": "outpatient",
+      "encounter_class": "emergency",
       "reason": "Directed_Use_Overdose",
       "codes": [
         {
@@ -572,12 +642,10 @@
         }
       ]
     },
-
-    "End_Directed_Use_Overdose_Encounter" : {
-      "type" : "EncounterEnd",
-      "direct_transition" : "Directed_Use"
+    "End_Directed_Use_Overdose_Encounter": {
+      "type": "EncounterEnd",
+      "direct_transition": "Directed_Use"
     },
-
     "Misuse_Overdose": {
       "type": "ConditionOnset",
       "target_encounter": "Misuse_Overdose_Encounter",
@@ -590,10 +658,9 @@
       ],
       "direct_transition": "Misuse_Overdose_Encounter"
     },
-
     "Misuse_Overdose_Encounter": {
       "type": "Encounter",
-      "encounter_class": "outpatient",
+      "encounter_class": "emergency",
       "reason": "Misuse_Overdose",
       "codes": [
         {
@@ -613,12 +680,10 @@
         }
       ]
     },
-
-    "End_Misuse_Overdose_Encounter" : {
-      "type" : "EncounterEnd",
-      "direct_transition" : "Misuse"
+    "End_Misuse_Overdose_Encounter": {
+      "type": "EncounterEnd",
+      "direct_transition": "Misuse"
     },
-
     "Addiction_Overdose": {
       "type": "ConditionOnset",
       "target_encounter": "Addiction_Overdose_Encounter",
@@ -631,10 +696,9 @@
       ],
       "direct_transition": "Addiction_Overdose_Encounter"
     },
-
     "Addiction_Overdose_Encounter": {
       "type": "Encounter",
-      "encounter_class": "outpatient",
+      "encounter_class": "emergency",
       "reason": "Addiction_Overdose",
       "codes": [
         {
@@ -654,7 +718,6 @@
         }
       ]
     },
-
     "Addiction_CarePlan_Selector": {
       "type": "Simple",
       "conditional_transition": [
@@ -671,7 +734,6 @@
         }
       ]
     },
-
     "Opioid_Addiction_CarePlan": {
       "type": "CarePlanStart",
       "target_encounter": "Addiction_Overdose_Encounter",
@@ -698,12 +760,10 @@
       ],
       "direct_transition": "End_Addiction_Overdose_Encounter"
     },
-
-    "End_Addiction_Overdose_Encounter" : {
-      "type" : "EncounterEnd",
-      "direct_transition" : "Detoxification"
+    "End_Addiction_Overdose_Encounter": {
+      "type": "EncounterEnd",
+      "direct_transition": "Detoxification"
     },
-
     "Death": {
       "type": "Death",
       "codes": [
@@ -715,7 +775,6 @@
       ],
       "direct_transition": "Terminal"
     },
-
     "Terminal": {
       "type": "Terminal"
     }
